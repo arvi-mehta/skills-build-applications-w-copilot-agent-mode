@@ -1,3 +1,4 @@
+import { getJson } from '../api/client.js';
 import { CapabilityCard } from './CapabilityCard.js';
 
 type Workout = {
@@ -9,6 +10,7 @@ type Workout = {
   reason: string;
 };
 type WorkoutsResponse = { suggestions: Workout[] };
+const loadWorkouts = (path: string) => getJson<WorkoutsResponse>(path);
 
 export default function Workouts() {
   return (
@@ -16,6 +18,7 @@ export default function Workouts() {
       title="Workout suggestions"
       description="Recommend workouts from activity patterns."
       path={`/api/workouts/suggestions/${encodeURIComponent('mona@example.com')}`}
+      load={loadWorkouts}
       emptyText="No workout suggestions yet."
       isEmpty={({ suggestions }) => suggestions.length === 0}
       render={({ suggestions }) => (

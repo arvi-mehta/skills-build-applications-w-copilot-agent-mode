@@ -1,7 +1,9 @@
+import { getJson } from '../api/client.js';
 import { CapabilityCard } from './CapabilityCard.js';
 
 type Activity = { _id?: string; type: string; minutes: number; points: number };
 type ActivityResponse = { activities: Activity[] };
+const loadActivities = (path: string) => getJson<ActivityResponse>(path);
 
 export default function Activities() {
   return (
@@ -9,6 +11,7 @@ export default function Activities() {
       title="Activities"
       description="Track student activity minutes and points."
       path="/api/activities"
+      load={loadActivities}
       emptyText="No activities yet."
       isEmpty={({ activities }) => activities.length === 0}
       render={({ activities }) => (

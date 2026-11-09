@@ -1,7 +1,9 @@
+import { getJson } from '../api/client.js';
 import { CapabilityCard } from './CapabilityCard.js';
 
 type Team = { _id?: string; name: string; mascot: string; members: string[] };
 type TeamsResponse = { teams: Team[] };
+const loadTeams = (path: string) => getJson<TeamsResponse>(path);
 
 export default function Teams() {
   return (
@@ -9,6 +11,7 @@ export default function Teams() {
       title="Teams"
       description="Manage teams and members."
       path="/api/teams"
+      load={loadTeams}
       emptyText="No teams yet."
       isEmpty={({ teams }) => teams.length === 0}
       render={({ teams }) => (
